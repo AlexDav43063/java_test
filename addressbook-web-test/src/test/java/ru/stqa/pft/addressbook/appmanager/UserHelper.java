@@ -25,6 +25,26 @@ public class UserHelper extends HelperBase {
   }
 
   public void initNewUser() {
-    wd.findElement(By.linkText("add new")).click();
+    click(By.linkText("add new"));
+  }
+
+  public void initModUser() {
+    click(By.xpath("//tr[2]//td[8]//a[1]"));
+  }
+
+  public void updateUser() {
+    click(By.name("update"));
+  }
+
+  public void removeUser() {
+    click(By.xpath("//form[2]//input[2]"));
+  }
+
+  public void selectUser() {
+    click(By.name("selected[]"));
+  }
+
+  public void removeUserForMainPage() {
+    click(By.xpath("//div[2]//input[1]"));
   }
 }
