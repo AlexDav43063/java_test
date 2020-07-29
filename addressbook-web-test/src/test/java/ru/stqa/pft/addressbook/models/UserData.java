@@ -7,16 +7,16 @@ public class UserData {
   private final String nick;
   private final String company;
   private final String street;
-  private final String tel;
+  private final String home;
 
-  public UserData(String name, String MiddleName, String lastName, String nick, String company, String street, String tel) {
+  public UserData(String name, String MiddleName, String lastName, String nick, String company, String street, String home) {
     this.name = name;
     middleName = MiddleName;
     this.lastName = lastName;
     this.nick = nick;
     this.company = company;
     this.street = street;
-    this.tel = tel;
+    this.home = home;
   }
 
   public String getName() {
@@ -43,7 +43,7 @@ public class UserData {
     return street;
   }
 
-  public String getTel() {
-    return tel;
+  public String getHome() {
+    return home;
   }
 }
