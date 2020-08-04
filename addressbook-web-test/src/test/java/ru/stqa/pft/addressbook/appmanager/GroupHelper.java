@@ -39,4 +39,15 @@ public class GroupHelper extends HelperBase {
   public void submitGroupMod() {
     click(By.name("update"));
   }
+ NavigationHelper nav = new NavigationHelper(wd);
+  public void createGroup(GroupData group) {
+    initGroupCreation();
+    fillGroupForm(group);
+    submitGroupCreation();
+    nav.goToGroupPage();
+  }
+
+  public boolean isThereAGroup() {
+    return isElementPresent(By.name("selected[]"));
+  }
 }
