@@ -9,14 +9,19 @@ public class UserData {
   private final String street;
   private final String home;
 
-  public UserData(String name, String MiddleName, String lastName, String nick, String company, String street, String home) {
+
+
+  private String group;
+
+  public UserData(String name, String MiddleName, String lastName, String nick, String company, String street, String home, String group) {
     this.name = name;
-    middleName = MiddleName;
+    this.middleName = MiddleName;
     this.lastName = lastName;
     this.nick = nick;
     this.company = company;
     this.street = street;
     this.home = home;
+    this.group = group;
   }
 
   public String getName() {
@@ -46,4 +51,8 @@ public class UserData {
   public String getHome() {
     return home;
   }
-}
+
+  public String getGroup() {
+    return group;
+  }
+  }

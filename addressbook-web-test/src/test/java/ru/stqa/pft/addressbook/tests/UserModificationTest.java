@@ -7,7 +7,14 @@ public class UserModificationTest extends TestBase {
   @Test
   public void testUserModification() {
     app.getUserHelper().initModUser();
-    app.getUserHelper().fillNewUserForm(new UserData("Name", "MName", "Last Name", "Alexxxx", "Company", "13 Elm Street", "222"));
+    app.getUserHelper().fillNewUserForm(new UserData("Name",
+            "MName",
+            "Last Name",
+            "Alexxxx",
+            "Company",
+            "13 Elm Street",
+            "222",
+            null), false);
     app.getUserHelper().updateUser();
     app.getNavigationHelper().goToHomePage();
   }
