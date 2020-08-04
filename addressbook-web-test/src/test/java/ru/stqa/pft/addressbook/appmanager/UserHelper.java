@@ -22,13 +22,17 @@ public class UserHelper extends HelperBase {
     type(By.name("middlename"), userData.getMiddleName());
     type(By.name("lastname"), userData.getLastName());
     type(By.name("nickname"), userData.getNick());
-    type(By.name("company"),userData.getCompany());
-    type(By.name("address"),userData.getStreet());
-    type(By.name("home"),userData.getHome());
+    type(By.name("company"), userData.getCompany());
+    type(By.name("address"), userData.getStreet());
+    type(By.name("home"), userData.getHome());
 
-    if(creation){
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
-    } else{
+    if (creation) {
+      try {
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
+      } catch (NoSuchElementException e) {
+        System.out.println("Group named " + "\'" + userData.getGroup() + "\' was not found, the contact was created without a group");
+      }
+    } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
@@ -55,5 +59,18 @@ public class UserHelper extends HelperBase {
 
   public void removeUserForMainPage() {
     click(By.xpath("//div[2]//input[1]"));
+  }
+
+  public boolean isThereAUser() {
+    return isElementPresent(By.xpath("//tr[2]//td[8]//a[1]"));
+  }
+
+  NavigationHelper nav = new NavigationHelper(wd);
+
+  public void createUser(UserData userData, boolean b) {
+    initNewUser();
+    fillNewUserForm(userData, b);
+    submitNewUser();
+    nav.goToHomePage();
   }
 }

@@ -8,9 +8,6 @@ public class UserData {
   private final String company;
   private final String street;
   private final String home;
-
-
-
   private String group;
 
   public UserData(String name, String MiddleName, String lastName, String nick, String company, String street, String home, String group) {
@@ -55,4 +52,4 @@ public class UserData {
   public String getGroup() {
     return group;
   }
-  }
+}

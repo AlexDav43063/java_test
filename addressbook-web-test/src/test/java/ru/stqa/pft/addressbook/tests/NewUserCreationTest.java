@@ -8,16 +8,13 @@ public class NewUserCreationTest extends TestBase {
 
   @Test
   public void testNewUserCreation() throws Exception {
-    app.getUserHelper().initNewUser();
-    app.getUserHelper().fillNewUserForm(new UserData("Name",
+    app.getUserHelper().createUser(new UserData("Name",
             "MName",
             "Last Name",
             "Alexxxx",
             "Company",
             "13 Elm Street",
             "222",
-            "Test1"),true);
-    app.getUserHelper().submitNewUser();
-    app.getNavigationHelper().goToHomePage();
+            "Test2"), true);
   }
 }
