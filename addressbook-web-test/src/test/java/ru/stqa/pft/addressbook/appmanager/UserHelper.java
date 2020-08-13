@@ -3,9 +3,13 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.models.UserData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserHelper extends HelperBase {
 
@@ -53,8 +57,8 @@ public class UserHelper extends HelperBase {
     click(By.xpath("//form[2]//input[2]"));
   }
 
-  public void selectUser() {
-    click(By.name("selected[]"));
+  public void selectUser(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void removeUserForMainPage() {
@@ -72,5 +76,20 @@ public class UserHelper extends HelperBase {
     fillNewUserForm(userData, b);
     submitNewUser();
     nav.goToHomePage();
+  }
+
+  public List<UserData> getUserList() {
+    List<UserData> users = new ArrayList<>();
+    List<WebElement> lastNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[3]"));
+    List<WebElement> firstNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[2]"));
+    List<WebElement> ids = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[1]/input"));
+    for(int i=0; i<lastNames.size(); i++){
+      String lname = lastNames.get(i).getText();
+      String fname = firstNames.get(i).getText();
+      int id = Integer.parseInt(ids.get(i).getAttribute("value"));
+      UserData user = new UserData(id,lname,null, fname,null,null,null,null,null);
+      users.add(user);
+    }
+    return users;
   }
 }
