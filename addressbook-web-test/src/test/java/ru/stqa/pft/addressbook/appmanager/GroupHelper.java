@@ -44,10 +44,19 @@ public class GroupHelper extends HelperBase {
     click(By.name("update"));
   }
  NavigationHelper nav = new NavigationHelper(wd);
+
   public void createGroup(GroupData group) {
     initGroupCreation();
     fillGroupForm(group);
     submitGroupCreation();
+    nav.goToGroupPage();
+  }
+
+  public void modifyGroup(GroupData groupData, int index) {
+    selectGroup(index);
+    initGroupMod();
+    fillGroupForm(groupData);
+    submitGroupMod();
     nav.goToGroupPage();
   }
 
