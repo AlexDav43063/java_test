@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.UserData;
 
@@ -8,16 +9,25 @@ import java.util.Comparator;
 import java.util.List;
 
 public class UserModificationTest extends TestBase {
+
+ @BeforeMethod
+ public void ensurePrecondition() {
+   UserData user = new UserData("Name",
+           "MName",
+           "Last Name",
+           "Alexxxx",
+           "Company",
+           "13 Elm Street",
+           "222",
+           "Test2");
+   if (!app.getUserHelper().isThereAUser()) {
+     app.getUserHelper().createUser(user, true);
+   }
+ }
+
   @Test
   public void testUserModification() {
-    UserData user = new UserData("Name",
-            "MName",
-            "Last Name",
-            "Alexxxx",
-            "Company",
-            "13 Elm Street",
-            "222",
-            "Test2");
+
     UserData userMod = new UserData("Name23",
             "MName",
             "Last Name214",
@@ -26,9 +36,7 @@ public class UserModificationTest extends TestBase {
             "13 Elm Street",
             "222",
             null);
-    if (!app.getUserHelper().isThereAUser()) {
-      app.getUserHelper().createUser(user, true);
-    }
+
     List<UserData> before = app.getUserHelper().getUserList();
     app.getUserHelper().initModUser();
     app.getUserHelper().fillNewUserForm(userMod, false);

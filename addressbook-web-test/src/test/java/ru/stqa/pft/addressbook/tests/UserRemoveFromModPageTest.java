@@ -1,14 +1,15 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.UserData;
 
 import java.util.List;
 
 public class UserRemoveFromModPageTest extends TestBase {
-  @Test
-  public void testUserRemove() {
+  @BeforeMethod
+  public void ensurePrecondition() {
     UserData user = new UserData("Name",
             "MName",
             "Last Name",
@@ -20,6 +21,10 @@ public class UserRemoveFromModPageTest extends TestBase {
     if (!app.getUserHelper().isThereAUser()) {
       app.getUserHelper().createUser(user, true);
     }
+  }
+
+  @Test
+  public void testUserRemove() {
     List<UserData> before = app.getUserHelper().getUserList();
     app.getUserHelper().initModUser();
     app.getUserHelper().removeUser();
