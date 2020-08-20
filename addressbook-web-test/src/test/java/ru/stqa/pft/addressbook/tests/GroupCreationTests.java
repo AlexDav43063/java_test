@@ -4,24 +4,20 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.GroupData;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreation() throws Exception {
     app.getNavigationHelper().goToGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    Set<GroupData> before = app.getGroupHelper().all();
     GroupData groupData = new GroupData().withName("Test2");
     app.getGroupHelper().createGroup(groupData);
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Set<GroupData> after = app.getGroupHelper().all();
     Assert.assertEquals(after.size(), before.size() + 1);
+    groupData.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
     before.add(groupData);
-    Comparator<? super GroupData> byId = (g1, g2)->Integer.compare(g1.getId(),g2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(after, before);
   }
 
