@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.models.GroupData;
+import ru.stqa.pft.addressbook.models.Groups;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -49,26 +50,26 @@ public class GroupHelper extends HelperBase {
 
     NavigationHelper nav = new NavigationHelper(wd);
 
-    public void createGroup(GroupData group) {
+    public void create(GroupData group) {
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
-        nav.goToGroupPage();
+        nav.groupPage();
     }
 
-    public void modifyGroup(GroupData groupData) {
+    public void modify(GroupData groupData) {
         selectGroupById(groupData.getId());
         initGroupMod();
         fillGroupForm(groupData);
         submitGroupMod();
-        nav.goToGroupPage();
+        nav.groupPage();
     }
 
 
     public void delete(GroupData group) {
         selectGroupById(group.getId());
         removeSelectedGroup();
-        nav.goToGroupPage();
+        nav.groupPage();
     }
 
     public boolean isThereAGroup() {
@@ -90,8 +91,8 @@ public class GroupHelper extends HelperBase {
         return groupData;
     }
 
-    public Set<GroupData> all() {
-        Set<GroupData> groupData = new HashSet<>();
+    public Groups all() {
+        Groups groupData = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
             String name = element.getText();
@@ -100,6 +101,4 @@ public class GroupHelper extends HelperBase {
         }
         return groupData;
     }
-
-
 }

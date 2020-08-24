@@ -28,7 +28,7 @@ public class UserRemoveFromModPageTest extends TestBase {
     List<UserData> before = app.getUserHelper().getUserList();
     app.getUserHelper().initModUser();
     app.getUserHelper().removeUser();
-    app.getNavigationHelper().goToHomePage();
+    app.goTo().goToHomePage();
     List<UserData> after = app.getUserHelper().getUserList();
     Assert.assertEquals(after.size(), before.size() - 1);
     before.remove(0);

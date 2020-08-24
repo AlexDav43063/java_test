@@ -29,8 +29,8 @@ public class UserRemoveFromMainPageTest extends TestBase {
     List<UserData> before = app.getUserHelper().getUserList();
     app.getUserHelper().selectUser(before.size() - 1);
     app.getUserHelper().removeUserForMainPage();
-    app.getNavigationHelper().acceptAlert();
-    app.getNavigationHelper().goToHomePage();
+    app.goTo().acceptAlert();
+    app.goTo().goToHomePage();
     List<UserData> after = app.getUserHelper().getUserList();
     Assert.assertEquals(after.size(), before.size() - 1);
     before.remove(before.size() - 1);

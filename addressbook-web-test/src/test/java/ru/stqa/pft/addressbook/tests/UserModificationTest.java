@@ -41,7 +41,7 @@ public class UserModificationTest extends TestBase {
     app.getUserHelper().initModUser();
     app.getUserHelper().fillNewUserForm(userMod, false);
     app.getUserHelper().updateUser();
-    app.getNavigationHelper().goToHomePage();
+    app.goTo().goToHomePage();
     List<UserData> after = app.getUserHelper().getUserList();
     Assert.assertEquals(after.size(), before.size());
     before.remove(0);
