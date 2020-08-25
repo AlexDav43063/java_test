@@ -1,54 +1,48 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.UserData;
+import ru.stqa.pft.addressbook.models.Users;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class UserModificationTest extends TestBase {
 
- @BeforeMethod
- public void ensurePrecondition() {
-   UserData user = new UserData("Name",
-           "MName",
-           "Last Name",
-           "Alexxxx",
-           "Company",
-           "13 Elm Street",
-           "222",
-           "Test2");
-   if (!app.getUserHelper().isThereAUser()) {
-     app.getUserHelper().createUser(user, true);
-   }
- }
+    @BeforeMethod
+    public void ensurePrecondition() {
+        UserData user = new UserData().
+                withName("Name")
+                .withMiddleName("MName")
+                .withLastName("Last Name")
+                .withNick("Alexxxx")
+                .withCompany("Company")
+                .withStreet("13 Elm Street")
+                .withHome("22")
+                .withGroup("Test2");
+        if (!app.user().isThereAUser()) {
+            app.user().create(user, true);
+        }
+    }
 
-  @Test
-  public void testUserModification() {
+    @Test
+    public void testUserModification() {
+        Users before = app.user().all();
+        UserData modifiedUser = before.iterator().next();
+        UserData user = new UserData().withId(modifiedUser.getId())
+                .withName("Name")
+                .withMiddleName("MName")
+                .withLastName("Last Name")
+                .withNick("Alexxxx")
+                .withCompany("Company")
+                .withStreet("13 Elm Street")
+                .withHome("22")
+                .withGroup("Test2");
+        app.user().modify(user);
+        Users after = app.user().all();
 
-    UserData userMod = new UserData("Name23",
-            "MName",
-            "Last Name214",
-            "Alexxxx",
-            "Company",
-            "13 Elm Street",
-            "222",
-            null);
-
-    List<UserData> before = app.getUserHelper().getUserList();
-    app.getUserHelper().initModUser();
-    app.getUserHelper().fillNewUserForm(userMod, false);
-    app.getUserHelper().updateUser();
-    app.goTo().goToHomePage();
-    List<UserData> after = app.getUserHelper().getUserList();
-    Assert.assertEquals(after.size(), before.size());
-    before.remove(0);
-    before.add(userMod);
-    Comparator<? super UserData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(after, before);
-  }
+        assertThat(after.size(), equalTo(before.size()));
+        assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
+    }
 }

@@ -1,33 +1,31 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.UserData;
+import ru.stqa.pft.addressbook.models.Users;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class NewUserCreationTest extends TestBase {
 
 
   @Test
   public void testNewUserCreation() throws Exception {
-    List<UserData> before = app.getUserHelper().getUserList();
-    UserData user = new UserData("Name",
-            "MName",
-            "Last Name",
-            "Alexxxx",
-            "Company",
-            "13 Elm Street",
-            "222",
-            "Test2");
-    app.getUserHelper().createUser(user, true);
-    List<UserData> after = app.getUserHelper().getUserList();
-    Assert.assertEquals(after.size(), before.size() + 1);
-    before.add(user);
-    Comparator<? super UserData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(after, before);
+    Users before = app.user().all();
+    UserData user = new UserData().
+            withName("Name")
+            .withMiddleName("MName")
+            .withLastName("Last Name")
+            .withNick("Alexxxx")
+            .withCompany("Company")
+            .withStreet("13 Elm Street")
+            .withHome("22").withGroup("Test2");
+    app.user().create(user, true);
+    Users after = app.user().all();
+
+    assertThat(after.size(), equalTo(before.size()+1));
+    assertThat(after,equalTo(
+            before.withAdded(user.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
   }
 }

@@ -61,7 +61,7 @@ public class ApplicationManager {
   public NavigationHelper goTo() {
     return navigationHelper;
   }
-  public UserHelper getUserHelper(){
+  public UserHelper user(){
     return userHelper;
   }
 }
