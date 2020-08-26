@@ -157,13 +157,9 @@ public class UserHelper extends HelperBase {
     for (int i = 0; i < lastNames.size(); i++) {
       String lname = lastNames.get(i).getText();
       String fname = firstNames.get(i).getText();
-      String[] phone = phones.get(i).getText().split("\n");
+      String allphones = phones.get(i).getText();
       int id = Integer.parseInt(ids.get(i).getAttribute("value"));
-      if (phone.length == 2) {
-        usersCache.add(new UserData().withId(id).withName(lname).withLastName(fname).withHome(phone[0]).withWork(phone[1]));
-      } else {
-        usersCache.add(new UserData().withId(id).withName(lname).withLastName(fname).withHome(phone[0]));
-      }
+      usersCache.add(new UserData().withId(id).withName(lname).withLastName(fname).withAllPhones(allphones));
     }
     return new Users(usersCache);
   }

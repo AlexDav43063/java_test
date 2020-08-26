@@ -13,6 +13,7 @@ public class UserData {
   private String home;
   private String group;
   private String work;
+  private String allPhones;
 
   @Override
   public boolean equals(Object o) {
@@ -78,8 +79,17 @@ public class UserData {
     return work;
   }
 
+  public String getAllPhones() {
+    return allPhones;
+  }
+
   public UserData withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public UserData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
     return this;
   }
 
