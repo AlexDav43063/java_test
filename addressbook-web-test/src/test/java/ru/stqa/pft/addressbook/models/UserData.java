@@ -12,7 +12,7 @@ public class UserData {
   private String street;
   private String home;
   private String group;
-
+  private String work;
 
   @Override
   public boolean equals(Object o) {
@@ -74,6 +74,10 @@ public class UserData {
     return id;
   }
 
+  public String getWork() {
+    return work;
+  }
+
   public UserData withId(int id) {
     this.id = id;
     return this;
@@ -111,6 +115,11 @@ public class UserData {
 
   public UserData withHome(String home) {
     this.home = home;
+    return this;
+  }
+
+  public UserData withWork(String work) {
+    this.work = work;
     return this;
   }
 

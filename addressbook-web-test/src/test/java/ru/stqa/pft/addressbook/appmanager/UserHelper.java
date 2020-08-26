@@ -30,6 +30,7 @@ public class UserHelper extends HelperBase {
     type(By.name("company"), userData.getCompany());
     type(By.name("address"), userData.getStreet());
     type(By.name("home"), userData.getHome());
+    type(By.name("work"), userData.getWork());
 
     if (creation) {
       try {
@@ -74,9 +75,10 @@ public class UserHelper extends HelperBase {
 
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
+
   public void selectUserByIdForMod(int id) {
 
-    wd.findElement(By.xpath( ".//input[@value='" + id + "']/..//following-sibling::td[7]/a")).click();
+    wd.findElement(By.xpath(".//input[@value='" + id + "']/..//following-sibling::td[7]/a")).click();
   }
 
   public int count() {
@@ -90,7 +92,7 @@ public class UserHelper extends HelperBase {
     fillNewUserForm(userData, b);
     submitNewUser();
     usersCache = null;
-    nav.goToHomePage();
+    nav.homePage();
   }
 
   public void modify(UserData userMod) {
@@ -98,7 +100,7 @@ public class UserHelper extends HelperBase {
     fillNewUserForm(userMod, false);
     updateUser();
     usersCache = null;
-    nav.goToHomePage();
+    nav.homePage();
   }
 
   public void deleteUserFromMainPage(UserData deletedUser) {
@@ -106,14 +108,24 @@ public class UserHelper extends HelperBase {
     removeUserForMainPage();
     nav.acceptAlert();
     usersCache = null;
-    nav.goToHomePage();
+    nav.homePage();
   }
 
   public void deleteUserFromModPage(UserData deletedUser) {
     selectUserByIdForMod(deletedUser.getId());
     removeUser();
     usersCache = null;
-    nav.goToHomePage();
+    nav.homePage();
+  }
+
+  public UserData infoFromEditForm(UserData user) {
+    selectUserByIdForMod(user.getId());
+    String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+    String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+    String home = wd.findElement(By.name("home")).getAttribute("value");
+    String work = wd.findElement(By.name("work")).getAttribute("value");
+    wd.navigate().back();
+    return new UserData().withName(firstName).withLastName(lastName).withHome(home).withWork(work);
   }
 
   public List<UserData> getUserList() {
@@ -121,7 +133,7 @@ public class UserHelper extends HelperBase {
     List<WebElement> lastNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[3]"));
     List<WebElement> firstNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[2]"));
     List<WebElement> ids = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[1]/input"));
-    for(int i=0; i<lastNames.size(); i++){
+    for (int i = 0; i < lastNames.size(); i++) {
       String lname = lastNames.get(i).getText();
       String fname = firstNames.get(i).getText();
       int id = Integer.parseInt(ids.get(i).getAttribute("value"));
@@ -134,18 +146,24 @@ public class UserHelper extends HelperBase {
   private Users usersCache = null;
 
   public Users all() {
-    if(usersCache != null){
+    if (usersCache != null) {
       return new Users(usersCache);
     }
     usersCache = new Users();
     List<WebElement> lastNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[3]"));
     List<WebElement> firstNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[2]"));
+    List<WebElement> phones = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[6]"));
     List<WebElement> ids = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[1]/input"));
-    for(int i=0; i<lastNames.size(); i++){
+    for (int i = 0; i < lastNames.size(); i++) {
       String lname = lastNames.get(i).getText();
       String fname = firstNames.get(i).getText();
+      String[] phone = phones.get(i).getText().split("\n");
       int id = Integer.parseInt(ids.get(i).getAttribute("value"));
-      usersCache.add(new UserData().withId(id).withName(lname).withLastName(fname));
+      if (phone.length == 2) {
+        usersCache.add(new UserData().withId(id).withName(lname).withLastName(fname).withHome(phone[0]).withWork(phone[1]));
+      } else {
+        usersCache.add(new UserData().withId(id).withName(lname).withLastName(fname).withHome(phone[0]));
+      }
     }
     return new Users(usersCache);
   }

@@ -20,7 +20,7 @@ public class NewUserCreationTest extends TestBase {
             .withNick("Alexxxx")
             .withCompany("Company")
             .withStreet("13 Elm Street")
-            .withHome("22").withGroup("Test2");
+            .withHome("22").withWork("12345").withGroup("Test2");
     app.user().create(user, true);
     assertThat(app.user().count(), equalTo(before.size()+1));
     Users after = app.user().all();

@@ -20,6 +20,7 @@ public class UserRemoveFromMainPageTest extends TestBase {
             .withCompany("Company")
             .withStreet("13 Elm Street")
             .withHome("22")
+            .withWork("21124")
             .withGroup("Test2");
     if (!app.user().isThereAUser()) {
       app.user().create(user, true);

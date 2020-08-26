@@ -20,6 +20,7 @@ public class UserModificationTest extends TestBase {
                 .withCompany("Company")
                 .withStreet("13 Elm Street")
                 .withHome("22")
+                .withWork("21124")
                 .withGroup("Test2");
         if (!app.user().isThereAUser()) {
             app.user().create(user, true);
@@ -38,6 +39,7 @@ public class UserModificationTest extends TestBase {
                 .withCompany("Company")
                 .withStreet("13 Elm Street")
                 .withHome("22")
+                .withWork("21124")
                 .withGroup("Test2");
         app.user().modify(user);
         assertThat(app.group().count(), equalTo(before.size()));
