@@ -11,9 +11,14 @@ public class UserData {
   private String company;
   private String street;
   private String home;
-  private String group;
+  private String mobile;
   private String work;
+  private String group;
   private String allPhones;
+  private String email;
+  private String email2;
+  private String email3;
+  private String allEmails;
 
   @Override
   public boolean equals(Object o) {
@@ -81,6 +86,52 @@ public class UserData {
 
   public String getAllPhones() {
     return allPhones;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getEmail2() {
+    return email2;
+  }
+
+  public String getEmail3() {
+    return email3;
+  }
+
+  public String getAllEmails() {
+    return allEmails;
+  }
+
+  public String getMobile() {
+    return mobile;
+  }
+
+  public UserData withMobile(String mobile) {
+    this.mobile = mobile;
+    return this;
+  }
+
+  public UserData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return this;
+  }
+
+
+  public UserData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public UserData withEmail2(String email2) {
+    this.email2 = email2;
+    return this;
+  }
+
+  public UserData withEmail3(String email3) {
+    this.email3 = email3;
+    return this;
   }
 
   public UserData withId(int id) {

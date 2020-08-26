@@ -123,9 +123,15 @@ public class UserHelper extends HelperBase {
     String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
     String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
     String home = wd.findElement(By.name("home")).getAttribute("value");
+    String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
     String work = wd.findElement(By.name("work")).getAttribute("value");
+    String email1 = wd.findElement(By.name("email")).getAttribute("value");
+    String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
+    String address = wd.findElement(By.name("address")).getAttribute("value");
     wd.navigate().back();
-    return new UserData().withName(firstName).withLastName(lastName).withHome(home).withWork(work);
+    return new UserData().withName(firstName).withLastName(lastName).withStreet(address).withHome(home).withMobile(mobile).withWork(work)
+            .withEmail(email1).withEmail2(email2).withEmail3(email3);
   }
 
   public List<UserData> getUserList() {
@@ -153,13 +159,18 @@ public class UserHelper extends HelperBase {
     List<WebElement> lastNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[3]"));
     List<WebElement> firstNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[2]"));
     List<WebElement> phones = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[6]"));
+    List<WebElement> emails = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[5]"));
+    List<WebElement> addresses = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[4]"));
     List<WebElement> ids = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[1]/input"));
     for (int i = 0; i < lastNames.size(); i++) {
-      String lname = lastNames.get(i).getText();
-      String fname = firstNames.get(i).getText();
-      String allphones = phones.get(i).getText();
+      String lName = lastNames.get(i).getText();
+      String fName = firstNames.get(i).getText();
+      String allPhones = phones.get(i).getText();
+      String address = addresses.get(i).getText();
+      String allEmails = emails.get(i).getText();
       int id = Integer.parseInt(ids.get(i).getAttribute("value"));
-      usersCache.add(new UserData().withId(id).withName(lname).withLastName(fname).withAllPhones(allphones));
+      usersCache.add(new UserData().withId(id).withName(lName).withLastName(fName).withAllPhones(allPhones)
+      .withStreet(address).withAllEmails(allEmails));
     }
     return new Users(usersCache);
   }
