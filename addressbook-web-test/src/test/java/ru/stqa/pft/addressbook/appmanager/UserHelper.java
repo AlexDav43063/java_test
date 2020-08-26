@@ -86,6 +86,7 @@ public class UserHelper extends HelperBase {
     initNewUser();
     fillNewUserForm(userData, b);
     submitNewUser();
+    usersCache = null;
     nav.goToHomePage();
   }
 
@@ -93,6 +94,7 @@ public class UserHelper extends HelperBase {
     selectUserByIdForMod(userMod.getId());
     fillNewUserForm(userMod, false);
     updateUser();
+    usersCache = null;
     nav.goToHomePage();
   }
 
@@ -100,12 +102,14 @@ public class UserHelper extends HelperBase {
     selectUserById(deletedUser.getId());
     removeUserForMainPage();
     nav.acceptAlert();
+    usersCache = null;
     nav.goToHomePage();
   }
 
   public void deleteUserFromModPage(UserData deletedUser) {
     selectUserByIdForMod(deletedUser.getId());
     removeUser();
+    usersCache = null;
     nav.goToHomePage();
   }
 
@@ -124,8 +128,13 @@ public class UserHelper extends HelperBase {
     return users;
   }
 
+  private Users usersCache = null;
+
   public Users all() {
-    Users users = new Users();
+    if(usersCache != null){
+      return new Users(usersCache);
+    }
+    usersCache = new Users();
     List<WebElement> lastNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[3]"));
     List<WebElement> firstNames = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[2]"));
     List<WebElement> ids = wd.findElements(By.xpath(".//tr[@name=\"entry\"]/td[1]/input"));
@@ -133,8 +142,8 @@ public class UserHelper extends HelperBase {
       String lname = lastNames.get(i).getText();
       String fname = firstNames.get(i).getText();
       int id = Integer.parseInt(ids.get(i).getAttribute("value"));
-      users.add(new UserData().withId(id).withName(lname).withLastName(fname));
+      usersCache.add(new UserData().withId(id).withName(lname).withLastName(fname));
     }
-    return users;
+    return new Users(usersCache);
   }
 }
