@@ -40,9 +40,8 @@ public class UserModificationTest extends TestBase {
                 .withHome("22")
                 .withGroup("Test2");
         app.user().modify(user);
+        assertThat(app.group().count(), equalTo(before.size()));
         Users after = app.user().all();
-
-        assertThat(after.size(), equalTo(before.size()));
         assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
     }
 }

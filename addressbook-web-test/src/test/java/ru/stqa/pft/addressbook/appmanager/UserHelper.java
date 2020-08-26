@@ -79,6 +79,9 @@ public class UserHelper extends HelperBase {
     wd.findElement(By.xpath( ".//input[@value='" + id + "']/..//following-sibling::td[7]/a")).click();
   }
 
+  public int count() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 
   NavigationHelper nav = new NavigationHelper(wd);
 

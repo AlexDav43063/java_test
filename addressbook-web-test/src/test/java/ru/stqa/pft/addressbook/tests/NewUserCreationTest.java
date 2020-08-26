@@ -22,9 +22,8 @@ public class NewUserCreationTest extends TestBase {
             .withStreet("13 Elm Street")
             .withHome("22").withGroup("Test2");
     app.user().create(user, true);
+    assertThat(app.user().count(), equalTo(before.size()+1));
     Users after = app.user().all();
-
-    assertThat(after.size(), equalTo(before.size()+1));
     assertThat(after,equalTo(
             before.withAdded(user.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
   }

@@ -30,9 +30,8 @@ public class UserRemoveFromModPageTest extends TestBase {
         Users before = app.user().all();
         UserData deletedUser = before.iterator().next();
         app.user().deleteUserFromModPage(deletedUser);
+        assertEquals(app.user().count(), before.size() - 1);
         Users after = app.user().all();
-
-        assertEquals(after.size(), before.size() - 1);
         assertThat(after, equalTo(before.without(deletedUser)));
     }
 }
