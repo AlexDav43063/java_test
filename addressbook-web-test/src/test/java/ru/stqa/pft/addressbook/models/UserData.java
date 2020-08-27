@@ -1,22 +1,33 @@
 package ru.stqa.pft.addressbook.models;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
 import java.util.Objects;
 
 public class UserData {
+  @XStreamOmitField
   private int id = Integer.MAX_VALUE;
+  @Expose
   private String name;
   private String middleName;
+  @Expose
   private String lastName;
   private String nick;
   private String company;
+  @Expose
   private String street;
+  @Expose
   private String home;
   private String mobile;
+  @Expose
   private String work;
   private String group;
   private String allPhones;
+  @Expose
   private String email;
+  @Expose
   private String email2;
   private String email3;
   private String allEmails;
