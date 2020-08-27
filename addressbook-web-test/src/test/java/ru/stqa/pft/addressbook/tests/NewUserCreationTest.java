@@ -1,34 +1,63 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.UserData;
 import ru.stqa.pft.addressbook.models.Users;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class NewUserCreationTest extends TestBase {
 
+    @DataProvider
+    public Iterator<Object[]> validUserFromXml() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.xml")));
+        String xml = "";
+        String line = reader.readLine();
+        while (line != null) {
+            xml += line;
+            line = reader.readLine();
+        }
+        XStream xstream = new XStream();
+        xstream.processAnnotations(UserData.class);
+        List<UserData> users = (List<UserData>) xstream.fromXML(xml);
+        return users.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+    }
 
-  @Test
-  public void testNewUserCreation() throws Exception {
-    Users before = app.user().all();
-    File photo = new File("src/test/resources/Снимок экрана 2020-08-27 в 10.15.41.png");
-    UserData user = new UserData().
-            withName("Name")
-            .withMiddleName("MName")
-            .withLastName("Last Name")
-            .withNick("Alexxxx")
-            .withPhoto(photo)
-            .withCompany("Company")
-            .withStreet("13 Elm Street")
-            .withHome("22").withWork("12345").withGroup("Test2");
-    app.user().create(user, true);
-    assertThat(app.user().count(), equalTo(before.size()+1));
-    Users after = app.user().all();
-    assertThat(after,equalTo(
-            before.withAdded(user.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
-  }
+    @DataProvider
+    public Iterator<Object[]> validUserFromJson() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.json")));
+        String json = "";
+        String line = reader.readLine();
+        while (line != null) {
+            json += line;
+            line = reader.readLine();
+        }
+        Gson gson = new Gson();
+        List<UserData> user = gson.fromJson(json, new TypeToken<List<UserData>>() {
+        }.getType());
+        return user.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+    }
+
+    @Test(dataProvider = "validUserFromJson")
+    public void testNewUserCreation(UserData user) {
+        Users before = app.user().all();
+        app.user().create(user, true);
+        assertThat(app.user().count(), equalTo(before.size() + 1));
+        Users after = app.user().all();
+        assertThat(after, equalTo(
+                before.withAdded(user.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    }
 }

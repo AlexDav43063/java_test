@@ -69,7 +69,7 @@ public class UserDataGenerator {
             users.add(new UserData().withName(String.format("name %s", i)).withLastName(String.format("lastname %s", i))
                     .withStreet(String.format("address %s", i)).withHome(String.format("33%s", i)).withWork(String.format("33%s", i))
                     .withEmail(String.format("firstTest%s@test.ru", i))
-                    .withEmail2(String.format("secondTest%s@test.ru", i)));
+                    .withEmail2(String.format("secondTest%s@test.ru", i)).withGroup("test1"));
         }
         return users;
     }

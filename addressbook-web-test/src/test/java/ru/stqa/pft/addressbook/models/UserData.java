@@ -1,11 +1,13 @@
 package ru.stqa.pft.addressbook.models;
 
 import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import java.io.File;
 import java.util.Objects;
 
+@XStreamAlias("user")
 public class UserData {
   @XStreamOmitField
   private int id = Integer.MAX_VALUE;
@@ -23,7 +25,6 @@ public class UserData {
   private String mobile;
   @Expose
   private String work;
-  private String group;
   private String allPhones;
   @Expose
   private String email;
@@ -32,6 +33,8 @@ public class UserData {
   private String email3;
   private String allEmails;
   private File photo;
+  @Expose
+  private String group;
 
   @Override
   public boolean equals(Object o) {
