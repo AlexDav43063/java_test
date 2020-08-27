@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.models;
 
+import java.io.File;
 import java.util.Objects;
 
 public class UserData {
@@ -19,6 +20,7 @@ public class UserData {
   private String email2;
   private String email3;
   private String allEmails;
+  private File photo;
 
   @Override
   public boolean equals(Object o) {
@@ -106,6 +108,15 @@ public class UserData {
 
   public String getMobile() {
     return mobile;
+  }
+
+  public File getPhoto() {
+    return photo;
+  }
+
+  public UserData withPhoto(File photo) {
+    this.photo = photo;
+    return this;
   }
 
   public UserData withMobile(String mobile) {
