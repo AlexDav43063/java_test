@@ -8,10 +8,4 @@
             <class name="ru.stqa.pft.addressbook.tests.RemoveGroupTest" />
         </classes>
     </test>
-
-    <test name="Users">
-        <classes>
-            <class name="ru.stqa.pft.addressbook.tests.NewUserCreationTest"/>
-        </classes>
-    </test>
 </suite>

@@ -17,9 +17,21 @@ task testGroups(type: Test) {
     useTestNG{
         suites 'src/test/resources/testng-groups.xml'
     }
+    if (project.hasProperty('browser')) {
+        systemProperties 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperties 'target', "${target}"
+    }
 }
 task testUsers(type: Test) {
     useTestNG{
         suites 'src/test/resources/testng-users.xml'
+    }
+    if (project.hasProperty('browser')) {
+        systemProperties 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperties 'target', "${target}"
     }
 }
