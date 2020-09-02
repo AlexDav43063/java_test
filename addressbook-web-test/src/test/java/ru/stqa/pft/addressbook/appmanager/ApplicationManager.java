@@ -15,61 +15,68 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-  private final Properties properties;
-  private WebDriver wd;
+    private final Properties properties;
+    private WebDriver wd;
 
-  private SessionHelper sessionHelper;
-  private NavigationHelper navigationHelper;
-  private GroupHelper groupHelper;
-  private UserHelper userHelper;
-  private String browser;
+    private SessionHelper sessionHelper;
+    private NavigationHelper navigationHelper;
+    private GroupHelper groupHelper;
+    private UserHelper userHelper;
+    private String browser;
+    private DbHelper dpHelper;
 
-  public ApplicationManager(String browser) {
-    this.browser = browser;
-    properties = new Properties();
-  }
-
-  public void init() throws IOException {
-    String target = System.getProperty("target", "local");
-    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-    if (browser.equals(BrowserType.FIREFOX)) {
-      wd = new FirefoxDriver();
-    } else if (browser.equals(BrowserType.CHROME)){
-      wd = new ChromeDriver();
-    } else if (browser.equals(BrowserType.IE)){
-      wd = new InternetExplorerDriver();
+    public ApplicationManager(String browser) {
+        this.browser = browser;
+        properties = new Properties();
     }
-    wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    wd.get(properties.getProperty("web.baseUrl"));
-    groupHelper = new GroupHelper(wd);
-    navigationHelper = new NavigationHelper(wd);
-    sessionHelper =new SessionHelper(wd);
-    userHelper = new UserHelper(wd);
-    sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
-  }
 
-  public void stop() {
-    wd.findElement(By.linkText("Logout")).click();
-    wd.quit();
-  }
-
-  public boolean isElementPresent(By by) {
-    try {
-      wd.findElement(by);
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
+    public void init() throws IOException {
+        String target = System.getProperty("target", "local");
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+        dpHelper = new DbHelper();
+        if (browser.equals(BrowserType.FIREFOX)) {
+            wd = new FirefoxDriver();
+        } else if (browser.equals(BrowserType.CHROME)) {
+            wd = new ChromeDriver();
+        } else if (browser.equals(BrowserType.IE)) {
+            wd = new InternetExplorerDriver();
+        }
+        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        wd.get(properties.getProperty("web.baseUrl"));
+        groupHelper = new GroupHelper(wd);
+        navigationHelper = new NavigationHelper(wd);
+        sessionHelper = new SessionHelper(wd);
+        userHelper = new UserHelper(wd);
+        sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
-  }
 
-  public GroupHelper group() {
-    return groupHelper;
-  }
+    public void stop() {
+        wd.findElement(By.linkText("Logout")).click();
+        wd.quit();
+    }
 
-  public NavigationHelper goTo() {
-    return navigationHelper;
-  }
-  public UserHelper user(){
-    return userHelper;
-  }
+    public boolean isElementPresent(By by) {
+        try {
+            wd.findElement(by);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public GroupHelper group() {
+        return groupHelper;
+    }
+
+    public NavigationHelper goTo() {
+        return navigationHelper;
+    }
+
+    public UserHelper user() {
+        return userHelper;
+    }
+
+    public DbHelper db() {
+        return dpHelper;
+    }
 }

@@ -3,214 +3,260 @@ package ru.stqa.pft.addressbook.models;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("user")
+@Entity
+@Table(name = "addressbook")
 public class UserData {
-  @XStreamOmitField
-  private int id = Integer.MAX_VALUE;
-  @Expose
-  private String name;
-  private String middleName;
-  @Expose
-  private String lastName;
-  private String nick;
-  private String company;
-  @Expose
-  private String street;
-  @Expose
-  private String home;
-  private String mobile;
-  @Expose
-  private String work;
-  private String allPhones;
-  @Expose
-  private String email;
-  @Expose
-  private String email2;
-  private String email3;
-  private String allEmails;
-  private File photo;
-  @Expose
-  private String group;
+    @XStreamOmitField
+    @Id
+    @Column(name = "id")
+    private int id = Integer.MAX_VALUE;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    UserData userData = (UserData) o;
-    return id == userData.id &&
-            Objects.equals(name, userData.name) &&
-            Objects.equals(lastName, userData.lastName);
-  }
+    @Expose
+    @Column(name = "firstname")
+    private String name;
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, lastName);
-  }
+    private String middleName;
 
-  @Override
-  public String toString() {
-    return "UserData{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", lastName='" + lastName + '\'' +
-            '}';
-  }
+    @Expose
+    @Column(name = "lastname")
+    private String lastName;
 
-  public String getName() {
-    return name;
-  }
+    @Column(name = "nickname", insertable = false, updatable = false)
+    private String nick;
 
-  public String getMiddleName() {
-    return middleName;
-  }
+    @Column(name = "nickname")
+    private String company;
 
-  public String getLastName() {
-    return lastName;
-  }
+    @Expose
+    @Column(name = "address")
+    @Type(type = "text")
+    private String street;
 
-  public String getNick() {
-    return nick;
-  }
+    @Expose
+    @Column(name = "home")
+    @Type(type = "text")
+    private String home;
 
-  public String getCompany() {
-    return company;
-  }
+    @Column(name = "mobile")
+    @Type(type = "text")
+    private String mobile;
 
-  public String getStreet() {
-    return street;
-  }
+    @Expose
+    @Column(name = "work")
+    @Type(type = "text")
+    private String work;
 
-  public String getHome() {
-    return home;
-  }
+    @Transient
+    private String allPhones;
 
-  public String getGroup() {
-    return group;
-  }
+    @Expose
+    @Column(name = "email")
+    @Type(type = "text")
+    private String email;
 
-  public int getId() {
-    return id;
-  }
+    @Expose
+    @Column(name = "email2")
+    @Type(type = "text")
+    private String email2;
 
-  public String getWork() {
-    return work;
-  }
+    @Column(name = "email3")
+    @Type(type = "text")
+    private String email3;
 
-  public String getAllPhones() {
-    return allPhones;
-  }
+    @Transient
+    private String allEmails;
 
-  public String getEmail() {
-    return email;
-  }
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
 
-  public String getEmail2() {
-    return email2;
-  }
-
-  public String getEmail3() {
-    return email3;
-  }
-
-  public String getAllEmails() {
-    return allEmails;
-  }
-
-  public String getMobile() {
-    return mobile;
-  }
-
-  public File getPhoto() {
-    return photo;
-  }
-
-  public UserData withPhoto(File photo) {
-    this.photo = photo;
-    return this;
-  }
-
-  public UserData withMobile(String mobile) {
-    this.mobile = mobile;
-    return this;
-  }
-
-  public UserData withAllEmails(String allEmails) {
-    this.allEmails = allEmails;
-    return this;
-  }
+    @Expose
+    @Transient
+    private String group;
 
 
-  public UserData withEmail(String email) {
-    this.email = email;
-    return this;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public UserData withEmail2(String email2) {
-    this.email2 = email2;
-    return this;
-  }
+    public String getMiddleName() {
+        return middleName;
+    }
 
-  public UserData withEmail3(String email3) {
-    this.email3 = email3;
-    return this;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public UserData withId(int id) {
-    this.id = id;
-    return this;
-  }
+    public String getNick() {
+        return nick;
+    }
 
-  public UserData withAllPhones(String allPhones) {
-    this.allPhones = allPhones;
-    return this;
-  }
+    public String getCompany() {
+        return company;
+    }
 
-  public UserData withLastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
+    public String getStreet() {
+        return street;
+    }
 
-  public UserData withName(String name) {
-    this.name = name;
-    return this;
-  }
+    public String getHome() {
+        return home;
+    }
 
-  public UserData withMiddleName(String middleName) {
-    this.middleName = middleName;
-    return this;
-  }
+    public String getGroup() {
+        return group;
+    }
 
-  public UserData withNick(String nick) {
-    this.nick = nick;
-    return this;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public UserData withCompany(String company) {
-    this.company = company;
-    return this;
-  }
+    public String getWork() {
+        return work;
+    }
 
-  public UserData withStreet(String street) {
-    this.street = street;
-    return this;
-  }
+    public String getAllPhones() {
+        return allPhones;
+    }
 
-  public UserData withHome(String home) {
-    this.home = home;
-    return this;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public UserData withWork(String work) {
-    this.work = work;
-    return this;
-  }
+    public String getEmail2() {
+        return email2;
+    }
 
-  public UserData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
+    public String getEmail3() {
+        return email3;
+    }
+
+    public String getAllEmails() {
+        return allEmails;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public File getPhoto() {
+        return new File(photo);
+    }
+
+    public UserData withPhoto(File photo) {
+        this.photo = photo.getPath();
+        return this;
+    }
+
+    public UserData withMobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+    public UserData withAllEmails(String allEmails) {
+        this.allEmails = allEmails;
+        return this;
+    }
+
+
+    public UserData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public UserData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
+    }
+
+    public UserData withEmail3(String email3) {
+        this.email3 = email3;
+        return this;
+    }
+
+    public UserData withId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public UserData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+
+    public UserData withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public UserData withName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public UserData withMiddleName(String middleName) {
+        this.middleName = middleName;
+        return this;
+    }
+
+    public UserData withNick(String nick) {
+        this.nick = nick;
+        return this;
+    }
+
+    public UserData withCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public UserData withStreet(String street) {
+        this.street = street;
+        return this;
+    }
+
+    public UserData withHome(String home) {
+        this.home = home;
+        return this;
+    }
+
+    public UserData withWork(String work) {
+        this.work = work;
+        return this;
+    }
+
+    public UserData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserData userData = (UserData) o;
+        return id == userData.id &&
+                Objects.equals(name, userData.name) &&
+                Objects.equals(lastName, userData.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastName);
+    }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }

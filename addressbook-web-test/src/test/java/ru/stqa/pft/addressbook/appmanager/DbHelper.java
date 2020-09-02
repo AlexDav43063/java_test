@@ -1,47 +1,34 @@
-package ru.stqa.pft.addressbook.tests;
+package ru.stqa.pft.addressbook.appmanager;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.GroupData;
+import ru.stqa.pft.addressbook.models.Groups;
 import ru.stqa.pft.addressbook.models.UserData;
 
 import java.util.List;
 
-public class HbConnectionTest {
+public class DbHelper {
 
-    private SessionFactory sessionFactory;
-    @BeforeClass
-    protected void setUp() throws Exception {
+    private final SessionFactory sessionFactory;
+
+    public DbHelper(){
         // A SessionFactory is set up once for an application!
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
-        try {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-            // so destroy it manually.
-            StandardServiceRegistryBuilder.destroy( registry );
-        }
     }
 
-    @Test
-    public void testHBConnection() {
+    public Groups groups() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<UserData> result = session.createQuery( "from UserData where deprecated = '00-00-0000'" ).list();
-        for ( UserData user : result ) {
-            System.out.println(user);
-        }
+        List<GroupData> result = session.createQuery( "from GroupData" ).list();
         session.getTransaction().commit();
         session.close();
-
+        return new Groups(result);
     }
 }
