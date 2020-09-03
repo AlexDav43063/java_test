@@ -21,18 +21,18 @@ public class UserRemoveFromModPageTest extends TestBase {
                 .withStreet("13 Elm Street")
                 .withHome("22")
                 .withWork("21124");
-        if (!app.user().isThereAUser()) {
+        if (app.db().users().size() == 0) {
             app.user().create(user, true);
         }
     }
 
     @Test
     public void testUserRemove() {
-        Users before = app.user().all();
+        Users before = app.db().users();
         UserData deletedUser = before.iterator().next();
         app.user().deleteUserFromModPage(deletedUser);
         assertEquals(app.user().count(), before.size() - 1);
-        Users after = app.user().all();
+        Users after = app.db().users();
         assertThat(after, equalTo(before.without(deletedUser)));
     }
 }

@@ -9,44 +9,4 @@
     <email2>secondTest0@test.ru</email2>
     <group>test1</group>
   </user>
-  <user>
-    <name>name 1</name>
-    <lastName>lastname 1</lastName>
-    <street>address 1</street>
-    <home>331</home>
-    <work>331</work>
-    <email>firstTest1@test.ru</email>
-    <email2>secondTest1@test.ru</email2>
-    <group>test1</group>
-  </user>
-  <user>
-    <name>name 2</name>
-    <lastName>lastname 2</lastName>
-    <street>address 2</street>
-    <home>332</home>
-    <work>332</work>
-    <email>firstTest2@test.ru</email>
-    <email2>secondTest2@test.ru</email2>
-    <group>test1</group>
-  </user>
-  <user>
-    <name>name 3</name>
-    <lastName>lastname 3</lastName>
-    <street>address 3</street>
-    <home>333</home>
-    <work>333</work>
-    <email>firstTest3@test.ru</email>
-    <email2>secondTest3@test.ru</email2>
-    <group>test1</group>
-  </user>
-  <user>
-    <name>name 4</name>
-    <lastName>lastname 4</lastName>
-    <street>address 4</street>
-    <home>334</home>
-    <work>334</work>
-    <email>firstTest4@test.ru</email>
-    <email2>secondTest4@test.ru</email2>
-    <group>test1</group>
-  </user>
 </list>

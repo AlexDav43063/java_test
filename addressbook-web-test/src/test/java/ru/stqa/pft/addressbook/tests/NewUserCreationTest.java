@@ -53,10 +53,10 @@ public class NewUserCreationTest extends TestBase {
 
     @Test(dataProvider = "validUserFromJson")
     public void testNewUserCreation(UserData user) {
-        Users before = app.user().all();
+        Users before = app.db().users();
         app.user().create(user, true);
+        Users after = app.db().users();
         assertThat(app.user().count(), equalTo(before.size() + 1));
-        Users after = app.user().all();
         assertThat(after, equalTo(
                 before.withAdded(user.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }

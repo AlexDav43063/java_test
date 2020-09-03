@@ -27,7 +27,7 @@ public class UserHelper extends HelperBase {
     type(By.name("middlename"), userData.getMiddleName());
     type(By.name("lastname"), userData.getLastName());
     type(By.name("nickname"), userData.getNick());
-    typeForFile(By.name("photo"),userData.getPhoto());
+//    typeForFile(By.name("photo"),userData.getPhoto());
     type(By.name("company"), userData.getCompany());
     type(By.name("address"), userData.getStreet());
     type(By.name("home"), userData.getHome());

@@ -22,14 +22,14 @@ public class UserModificationTest extends TestBase {
                 .withHome("22")
                 .withWork("21124")
                 .withGroup("Test2");
-        if (!app.user().isThereAUser()) {
+        if (app.db().users().size() == 0) {
             app.user().create(user, true);
         }
     }
 
     @Test
     public void testUserModification() {
-        Users before = app.user().all();
+        Users before = app.db().users();
         UserData modifiedUser = before.iterator().next();
         UserData user = new UserData().withId(modifiedUser.getId())
                 .withName("Name")
@@ -43,7 +43,7 @@ public class UserModificationTest extends TestBase {
                 .withGroup("Test2");
         app.user().modify(user);
         assertThat(app.group().count(), equalTo(before.size()));
-        Users after = app.user().all();
+        Users after = app.db().users();
         assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
     }
 }

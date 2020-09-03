@@ -22,18 +22,18 @@ public class UserRemoveFromMainPageTest extends TestBase {
             .withHome("22")
             .withWork("21124")
             .withGroup("Test2");
-    if (!app.user().isThereAUser()) {
+    if (app.db().users().size() == 0) {
       app.user().create(user, true);
     }
   }
 
   @Test
   public void testUserRemoveFromMainPage() {
-    Users before = app.user().all();
+    Users before = app.db().users();
     UserData deletedUser = before.iterator().next();
     app.user().deleteUserFromMainPage(deletedUser);
     assertEquals(app.user().count(), before.size()-1);
-    Users after = app.user().all();
+    Users after = app.db().users();
     assertThat(after, equalTo(before.without(deletedUser)));
   }
 }
