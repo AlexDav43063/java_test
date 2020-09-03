@@ -32,6 +32,9 @@ task testGroups(type: Test) {
     if (project.hasProperty('target')) {
         systemProperties 'target', "${target}"
     }
+    if (project.hasProperty('verifyUI')) {
+        systemProperties 'verifyUI', "${verifyUI}"
+    }
 }
 task testUsers(type: Test) {
     useTestNG{
@@ -42,5 +45,8 @@ task testUsers(type: Test) {
     }
     if (project.hasProperty('target')) {
         systemProperties 'target', "${target}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        systemProperties 'verifyUI', "${verifyUI}"
     }
 }
