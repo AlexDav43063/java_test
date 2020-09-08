@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import ru.stqa.pft.addressbook.models.GroupData;
+import ru.stqa.pft.addressbook.models.Groups;
 import ru.stqa.pft.addressbook.models.UserData;
 import ru.stqa.pft.addressbook.models.Users;
 
@@ -23,6 +25,7 @@ public class UserHelper extends HelperBase {
   }
 
   public void fillNewUserForm(UserData userData, boolean creation) {
+    String group_name = userData.getGroups().iterator().next().getName();
     type(By.name("firstname"), userData.getName());
     type(By.name("middlename"), userData.getMiddleName());
     type(By.name("lastname"), userData.getLastName());
@@ -34,14 +37,14 @@ public class UserHelper extends HelperBase {
     type(By.name("work"), userData.getWork());
 
     if (creation) {
-      try {
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
-      } catch (NoSuchElementException e) {
-        System.out.println("Group named " + "\'" + userData.getGroup() + "\' was not found, the contact was created without a group");
-      }
-    } else {
+      if(userData.getGroups().size()>0){
+        userData.getGroups()
+        Assert.assertTrue(userData.getGroups().size() == 1);
+       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(group_name);
+      } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
+   }
   }
 
   public void initNewUser() {

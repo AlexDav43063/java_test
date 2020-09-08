@@ -7,7 +7,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("user")
 @Entity
@@ -77,11 +79,15 @@ public class UserData {
     @Type(type = "text")
     private String photo;
 
-    @Expose
-    @Transient
-    private String group;
+//    @Expose
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name="group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
-
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
     public String getName() {
         return name;
     }
@@ -110,9 +116,9 @@ public class UserData {
         return home;
     }
 
-    public String getGroup() {
-        return group;
-    }
+//    public String getGroup() {
+//        return group;
+//    }
 
     public int getId() {
         return id;
@@ -231,10 +237,12 @@ public class UserData {
         return this;
     }
 
-    public UserData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
+//    public UserData withGroup(String group) {
+//        this.group = group;
+//        return this;
+//    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -257,6 +265,12 @@ public class UserData {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", groups=" + groups +
                 '}';
+    }
+
+    public UserData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
     }
 }

@@ -32,16 +32,16 @@ public class HbConnectionTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testHBConnection() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<UserData> result = session.createQuery( "from UserData where deprecated = '00-00-0000'" ).list();
-        for ( UserData user : result ) {
-            System.out.println(user);
-        }
         session.getTransaction().commit();
         session.close();
-
+        for ( UserData user : result ) {
+            System.out.println(user);
+            System.out.println(user.getGroups());
+        }
     }
 }

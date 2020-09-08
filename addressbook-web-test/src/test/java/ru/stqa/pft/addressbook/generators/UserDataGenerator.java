@@ -6,6 +6,10 @@ import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
+import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
+import ru.stqa.pft.addressbook.appmanager.DbHelper;
+import ru.stqa.pft.addressbook.models.GroupData;
+import ru.stqa.pft.addressbook.models.Groups;
 import ru.stqa.pft.addressbook.models.UserData;
 
 import java.io.File;
@@ -69,7 +73,8 @@ public class UserDataGenerator {
             users.add(new UserData().withName(String.format("name %s", i)).withLastName(String.format("lastname %s", i))
                     .withStreet(String.format("address %s", i)).withHome(String.format("33%s", i)).withWork(String.format("33%s", i))
                     .withEmail(String.format("firstTest%s@test.ru", i))
-                    .withEmail2(String.format("secondTest%s@test.ru", i)).withGroup("test1"));
+                    .withEmail2(String.format("secondTest%s@test.ru", i)));
+//                    .inGroup(new GroupData().withName("Test1").withHeader("Header1").withFooter("footer1")));
         }
         return users;
     }

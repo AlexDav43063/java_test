@@ -6,7 +6,24 @@
     "home": "330",
     "work": "330",
     "email": "firstTest0@test.ru",
-    "email2": "secondTest0@test.ru",
-    "group": "test1"
+    "email2": "secondTest0@test.ru"
+  },
+  {
+    "name": "name 1",
+    "lastName": "lastname 1",
+    "street": "address 1",
+    "home": "331",
+    "work": "331",
+    "email": "firstTest1@test.ru",
+    "email2": "secondTest1@test.ru"
+  },
+  {
+    "name": "name 2",
+    "lastName": "lastname 2",
+    "street": "address 2",
+    "home": "332",
+    "work": "332",
+    "email": "firstTest2@test.ru",
+    "email2": "secondTest2@test.ru"
   }
 ]

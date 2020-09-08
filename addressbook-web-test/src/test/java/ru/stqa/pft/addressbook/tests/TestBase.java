@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
 import ru.stqa.pft.addressbook.models.GroupData;
 import ru.stqa.pft.addressbook.models.Groups;
+import ru.stqa.pft.addressbook.models.Users;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -49,6 +50,14 @@ public class TestBase {
             Groups dbGroups = app.db().groups();
             Groups uiGroups = app.group().all();
             assertThat(uiGroups, equalTo(dbGroups.stream()
+                    .map((g)->new GroupData().withId(g.getId()).withName(g.getName())).collect(Collectors.toSet())));
+        }
+    }
+    public void verifyUserListInUI() {
+        if (Boolean.getBoolean("verifyUI")) {
+            Users dbUsers = app.db().users();
+            Users uiUsers = app.user().all();
+            assertThat(uiUsers, equalTo(dbUsers.stream()
                     .map((g)->new GroupData().withId(g.getId()).withName(g.getName())).collect(Collectors.toSet())));
         }
     }
