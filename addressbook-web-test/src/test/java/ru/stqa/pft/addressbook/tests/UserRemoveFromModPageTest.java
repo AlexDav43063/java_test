@@ -31,21 +31,6 @@ public class UserRemoveFromModPageTest extends TestBase {
             app.user().create(user, true);
         }
     }
-//    public void ensurePrecondition() {
-//        UserData user = new UserData().
-//                withName("Name")
-//                .withMiddleName("MName")
-//                .withLastName("Last Name")
-//                .withNick("Alexxxx")
-//                .withCompany("Company")
-//                .withStreet("13 Elm Street")
-//                .withHome("22")
-//                .withWork("21124");
-//        if (app.db().users().size() == 0) {
-//            app.user().create(user, true);
-//        }
-//    }
-
     @Test
     public void testUserRemove() {
         Users before = app.db().users();

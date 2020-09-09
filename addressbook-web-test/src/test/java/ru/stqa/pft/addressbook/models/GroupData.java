@@ -30,8 +30,9 @@ public class GroupData {
   @Type(type = "text")
   private String footer;
 
-  @ManyToMany(mappedBy = "groups")
+  @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
   private Set<UserData> users = new HashSet<UserData>();
+
 
   public Users getUsers() {
     return new Users(users);

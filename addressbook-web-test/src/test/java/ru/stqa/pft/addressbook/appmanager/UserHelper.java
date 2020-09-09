@@ -38,13 +38,27 @@ public class UserHelper extends HelperBase {
 
     if (creation) {
       if(userData.getGroups().size()>0){
-        userData.getGroups()
+//        userData.getGroups();
         Assert.assertTrue(userData.getGroups().size() == 1);
        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(group_name);
       } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
    }
+  }
+
+  public void addUserToGroup(int groupId) {
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(Integer.toString(groupId));
+    wd.findElement(By.xpath("//input[@name='add']")).click();
+  }
+
+  public void selectGroupForImaging(int groupId){
+    new Select(wd.findElement(By.name("group"))).selectByValue(Integer.toString(groupId));
+  }
+
+  public void removeUserFromSelectedGroup(int userId) {
+    selectUserById(userId);
+    wd.findElement(By.xpath("//input[@name='remove']")).click();
   }
 
   public void initNewUser() {
