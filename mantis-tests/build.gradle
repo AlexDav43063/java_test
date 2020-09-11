@@ -11,9 +11,9 @@ dependencies {
 }
 
 test {
-    useTestNG{
-        suites 'src/test/resources/testng.xml'
-    }
+//    useTestNG{
+//        suites 'src/test/resources/testng.xml'
+//    }
     if (project.hasProperty('browser')) {
         systemProperties 'browser', "${browser}"
     }
