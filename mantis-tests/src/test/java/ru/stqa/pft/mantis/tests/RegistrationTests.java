@@ -23,23 +23,23 @@ public class RegistrationTests extends TestBase {
     public void testRegistration() throws InterruptedException, IOException, MessagingException {
         long now = System.currentTimeMillis();
         String email = String.format("user%s@localhost.localdomain",now);
-        String user =  String.format("iser%s",now);
+        String user =  String.format("user%s",now);
         String password = "password";
         app.james().createUser(user, password);
         app.registration().start(user, email);
 //        List<MailMessage> mailMessages = app.mail().waitForMail(2, 100000);
         List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
-        String confirmationLink = findConfirmationLink(mailMessages, email);
+        String confirmationLink = app.mail().findConfirmationLink(mailMessages, email);
         app.registration().finish(confirmationLink, password, user);
         assertTrue(app.newSession().login(user, password));
 
     }
 
-    private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
-        MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
-        VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
-        return regex.getText(mailMessage.text);
-    }
+//    private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
+//        MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
+//        VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+//        return regex.getText(mailMessage.text);
+//    }
 
 //    @AfterMethod(alwaysRun = true)
 //    public void stopMailServer() {
