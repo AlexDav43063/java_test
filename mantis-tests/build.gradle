@@ -19,6 +19,7 @@ dependencies {
     compile "com.sun.xml.bind:jaxb-impl:2.2.11"
     compile "com.sun.mail:javax.mail:1.6.2"
     compile "ru.lanwen.verbalregex:java-verbal-expressions:1.6"
+    compile "biz.futureware.mantis:mantis-axis-soap-client:1.2.19"
 }
 
 test {
