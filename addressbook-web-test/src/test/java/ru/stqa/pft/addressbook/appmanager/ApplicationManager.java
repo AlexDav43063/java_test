@@ -38,6 +38,10 @@ public class ApplicationManager {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
         dpHelper = new DbHelper();
+        groupHelper = new GroupHelper(wd);
+        navigationHelper = new NavigationHelper(wd);
+        sessionHelper = new SessionHelper(wd);
+        userHelper = new UserHelper(wd);
         if("".equalsIgnoreCase(properties.getProperty("selenium.server"))) {
             if (browser.equals(BrowserType.FIREFOX)) {
                 wd = new FirefoxDriver();
@@ -54,10 +58,6 @@ public class ApplicationManager {
         }
 //        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
-        groupHelper = new GroupHelper(wd);
-        navigationHelper = new NavigationHelper(wd);
-        sessionHelper = new SessionHelper(wd);
-        userHelper = new UserHelper(wd);
         sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
 
