@@ -49,7 +49,7 @@ public class ApplicationManager {
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
-            capabilities.setPlatform(Platform.valueOf(System.getProperty("platform", "win10")));
+//            capabilities.setPlatform(Platform.valueOf(System.getProperty("platform", "win10")));
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
 //        wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
