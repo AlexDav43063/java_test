@@ -34,11 +34,41 @@ public class ApplicationManager {
         properties = new Properties();
     }
 
+//    public void init() throws IOException {
+//        String target = System.getProperty("target", "local");
+//        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+//        dpHelper = new DbHelper();
+//        if("".equalsIgnoreCase(properties.getProperty("selenium.server"))) {
+//            if (browser.equals(BrowserType.FIREFOX)) {
+//                wd = new FirefoxDriver();
+//            } else if (browser.equals(BrowserType.CHROME)) {
+//                wd = new ChromeDriver();
+//            } else if (browser.equals(BrowserType.IE)) {
+//                wd = new InternetExplorerDriver();
+//            }
+//        } else {
+//            DesiredCapabilities capabilities = new DesiredCapabilities();
+//            capabilities.setBrowserName(browser);
+////            capabilities.setPlatform(Platform.valueOf(System.getProperty("platform", "win10")));
+//            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
+//        }
+////        wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//        wd.get(properties.getProperty("web.baseUrl"));
+//        groupHelper = new GroupHelper(wd);
+//        navigationHelper = new NavigationHelper(wd);
+//        sessionHelper = new SessionHelper(wd);
+//        userHelper = new UserHelper(wd);
+//        sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
+//
+//    }
+
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
         dpHelper = new DbHelper();
-        if("".equalsIgnoreCase(properties.getProperty("selenium.server"))) {
+
+        if ("".equals(properties.getProperty("selenium.server"))) {
             if (browser.equals(BrowserType.FIREFOX)) {
                 wd = new FirefoxDriver();
             } else if (browser.equals(BrowserType.CHROME)) {
@@ -49,15 +79,15 @@ public class ApplicationManager {
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
-//            capabilities.setPlatform(Platform.valueOf(System.getProperty("platform", "win10")));
+//            capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
-//        wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
         groupHelper = new GroupHelper(wd);
+        userHelper = new UserHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
-        userHelper = new UserHelper(wd);
         sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
 
