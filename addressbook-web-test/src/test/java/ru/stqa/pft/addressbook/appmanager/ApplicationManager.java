@@ -47,10 +47,10 @@ public class ApplicationManager {
                 wd = new InternetExplorerDriver();
             }
         } else {
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setBrowserName(browser);
+//            DesiredCapabilities capabilities = new DesiredCapabilities();
+//            capabilities.setBrowserName(browser);
 //            capabilities.setPlatform(Platform.valueOf(System.getProperty("platform", "win10")));
-            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), DesiredCapabilities.chrome());
         }
 //        wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
