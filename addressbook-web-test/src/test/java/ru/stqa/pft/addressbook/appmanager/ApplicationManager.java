@@ -52,18 +52,17 @@ public class ApplicationManager {
             capabilities.setPlatform(Platform.valueOf(System.getProperty("platform", "win10")));
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
-        wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//        wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
         userHelper = new UserHelper(wd);
-
         sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
 
     public void stop() {
-//        wd.findElement(By.linkText("Logout")).click();
+        wd.findElement(By.linkText("Logout")).click();
         wd.quit();
     }
 
