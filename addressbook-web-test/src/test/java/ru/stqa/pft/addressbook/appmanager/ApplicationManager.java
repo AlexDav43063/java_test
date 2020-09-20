@@ -52,7 +52,7 @@ public class ApplicationManager {
 //            capabilities.setPlatform(Platform.valueOf(System.getProperty("platform", "win10")));
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
-        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+//        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
